@@ -1,1 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.btn {
+  @apply p-2 bg-blue-500 disabled:cursor-default disabled:opacity-80;
+}
+
+.btn-danger {
+  @apply btn bg-red-500;
+}
+
+.btn-info {
+  @apply btn bg-yellow-500;
+}
