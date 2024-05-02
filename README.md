@@ -1,3 +1,5 @@
+![Bogovia](https://github.com/stefanbogdanov1c/realmstead/assets/105820864/ccf08d72-992f-4c22-8fb8-f87698404ce7)
+
 # REALMSTEAD
 
 This is a Wikipedia like project which serves as a developing ground for a story I aim to write about a medieval world.
