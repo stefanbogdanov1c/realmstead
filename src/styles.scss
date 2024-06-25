@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "CloisterBlack"; /* Provide a name for the font family */
+  src: url("./assets/CloisterBlack.ttf") format("truetype"); /* Specify the font file's location */
+}
+
+body {
+  font-family: "CloisterBlack", sans-serif; /* Use your custom font with a fallback */
+  color: maroon !important;
+  font-size: x-large;
+}
+
 .btn {
   @apply p-2 bg-blue-500 disabled:cursor-default disabled:opacity-80;
 }
@@ -12,4 +23,29 @@
 
 .btn-info {
   @apply btn bg-yellow-500;
+}
+
+.border-red {
+  border-style: ridge;
+  border-color: red;
+  border-width: 10px;
+  margin: 10px;
+}
+
+.paper {
+  background-color: #fdf5e6; /* A light beige color */
+  background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 50%
+    ),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 50%, transparent 50%);
+}
+
+.paper2 {
+  background: radial-gradient(ellipse at center, #e5e696 64%,#d1d360 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+.form-group {
+  @apply border-red p-2 flex flex-col gap-2;
 }

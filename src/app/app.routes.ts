@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { ContinentsComponent } from './continents/continents.component';
 import { KingdomsComponent } from './kingdoms/kingdoms.component';
 import { KingdomDetailComponent } from './kingdom-detail/kingdom-detail.component';
+import { NoblesComponent } from './nobles/nobles.component';
 
 export const routes: Routes = [
   {
@@ -17,5 +18,10 @@ export const routes: Routes = [
         component: KingdomDetailComponent,
       }
     ],
-  }
+  },
+  {
+    path: 'nobles',
+    component: NoblesComponent,
+  },
+
 ];
