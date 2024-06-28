@@ -1,0 +1,104 @@
+<form [formGroup]="nobleForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-2">
+  <div class="flex flex-wrap gap-2">
+    <div class="form-group flex-1 min-w-[200px]">
+      <label for="name" class="block font-medium ">Name:</label>
+      <input type="text" id="name" formControlName="name" class="mt-1 block w-full p-2 border rounded-lg text-black" />
+      <div *ngIf="nobleForm.get('name')?.invalid && (nobleForm.get('name')?.dirty || nobleForm.get('name')?.touched)" class="text-red-600 mt-1">
+        Name is required
+      </div>
+    </div>
+    <div class="form-group flex-1 min-w-[200px]">
+      <label for="lastName" class="block font-medium ">Last Name:</label>
+      <input type="text" id="lastName" formControlName="lastName" class="mt-1 block w-full p-2 border rounded-lg text-black" />
+      <div *ngIf="nobleForm.get('lastName')?.invalid && (nobleForm.get('lastName')?.dirty || nobleForm.get('lastName')?.touched)" class="text-red-600 mt-1">
+        Last Name is required
+      </div>
+    </div>
+    <div class="form-group flex-1 min-w-[200px]">
+      <label for="age" class="block font-medium ">Age:</label>
+      <input type="number" id="age" formControlName="age" class="mt-1 block w-full p-2 border rounded-lg text-black" />
+      <div *ngIf="nobleForm.get('age')?.invalid && (nobleForm.get('age')?.dirty || nobleForm.get('age')?.touched)" class="text-red-600 mt-1">
+        Age is required and should be a positive number
+      </div>
+    </div>
+    <div class="form-group flex-1 min-w-[200px]">
+      <label for="alive" class="block font-medium ">Alive:</label>
+      <select id="alive" formControlName="alive" class="mt-1 block w-full p-2 border rounded-lg text-black">
+        <option value="true">True</option>
+        <option value="false">False</option>
+      </select>
+    </div>
+    <div class="form-group flex-1 min-w-[200px]">
+      <label for="gender" class="block font-medium ">Gender:</label>
+      <select id="gender" formControlName="gender" class="mt-1 block w-full p-2 border rounded-lg text-black">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+    </div>
+    <div class="form-group flex-1 min-w-[200px]">
+      <label for="title" class="block font-medium ">Title:</label>
+      <input type="text" id="title" formControlName="title" class="mt-1 block w-full p-2 border rounded-lg text-black" />
+    </div>
+    <div class="form-group flex-1 min-w-[200px]">
+      <label for="nickname" class="block font-medium ">Nickname:</label>
+      <input type="text" id="nickname" formControlName="nickname" class="mt-1 block w-full p-2 border rounded-lg text-black" />
+    </div>
+
+    @if(nobles.length > 1){
+      @if(hasValidParents(nobles, 'female')) {
+        <div class="form-group">
+          <label for="motherId">Mother:</label>
+          <select id="motherId" formControlName="motherId" class="mt-1 block w-full p-2 border rounded-lg text-black">
+            <option value=""></option>
+            @for(noble of filterValidParents(nobles, 'female'); track noble.name){
+              @if(noble.gender === 'female') {
+                <option [value]="noble._id">
+                  {{noble.title}} {{ noble.name }} {{ noble.lastName }}
+                </option>
+              }
+            }
+          </select>
+        </div>
+      }
+      @if(hasValidParents(nobles, 'male')) {
+        <div class="form-group">
+          <label for="fatherId">Father:</label>
+          <select id="fatherId" formControlName="fatherId" class="mt-1 block w-full p-2 border rounded-lg text-black">
+            <option value=""></option>
+            @for(noble of filterValidParents(nobles, 'male'); track noble.name){
+              <option [value]="noble._id">
+                {{noble.title}} {{ noble.name }} {{ noble.lastName }}
+              </option>
+            }
+          </select>
+        </div>
+      }
+    }
+    @if(hasValidSpouses(nobles) && nobles.length > 0) {
+      <div class="form-group">
+        <label for="spouseId">Spouse:</label>
+        <select id="spouseId" formControlName="spouseId" class="mt-1 block w-full p-2 border rounded-lg text-black">
+          <option value=""></option>
+          @for(noble of filterValidSpouses(nobles); track noble.name){
+            <option [value]="noble._id">
+              {{noble.title}} {{ noble.name }} {{ noble.lastName }}
+            </option>
+          }
+        </select>
+      </div>
+    }
+    <div class="form-group w-full">
+      <label for="description">Description:</label>
+      <textarea id="description" formControlName="description" class="text-black"></textarea>
+    </div>
+  </div>
+
+  <div class="flex justify-between gap-2">
+    <button type="button" routerLink="/nobles" class="btn-danger w-full cursor-pointer">
+      Go Back
+    </button>
+    <button type="submit" [disabled]="!nobleForm.valid" class="btn w-full cursor-pointer">
+      Submit
+    </button>
+  </div>
+</form>

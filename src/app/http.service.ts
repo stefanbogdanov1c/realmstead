@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Noble } from './types';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +14,7 @@ export class HttpService {
     return this.http.get<Noble[]>(`${this.baseUrl}/api/nobles`);
   }
 
-  createNewNoble(noble: any) {
+  createNewNoble(noble: Noble) {
     return this.http.post(`${this.baseUrl}/api/nobles`, noble);
   }
 
@@ -22,7 +22,7 @@ export class HttpService {
     return this.http.delete(`${this.baseUrl}/api/nobles/${id}`);
   }
 
-  test() {
-    console.log('test');
+  updateNoble(noble: Noble) {
+    return this.http.put(`${this.baseUrl}/api/nobles/${noble._id}`, noble);
   }
 }

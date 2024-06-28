@@ -38,10 +38,9 @@ export interface Noble {
   age: number;
   alive: boolean;
   gender: 'male' | 'female';
-  spouse?: Noble;
-  children?: Noble[];
-  parents?: Noble[];
-  siblings?: Noble[];
+  fatherId?: string;
+  motherId?: string;
+  spouseId?: string;
   title?: string;
   nickname?: string;
   description?: string;
