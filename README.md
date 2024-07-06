@@ -6,9 +6,10 @@ This is a Wikipedia like project which serves as a developing ground for a story
 
 ### Instructions
 
-First off, after cloning this repo, run `npm install` to install all dependencies needed to run the Angular application. After that, use `npm start` to run it. 
-To use the app properly, You must also turn on the API. Go into the `api/` directory, and run the command `nodemon .\index.js`.
+First off, after cloning this repo, run `npm install` to install all dependencies needed to run the Angular application. After that, use `npm start` to run it.
+
+To get the data from database, the developer must turn on the server. That is done by running the `npm run api` command. Doing so will run the server in a terminal, which will react to any changes made by the developer.  
 
 ### Developing
 
-Every feature must be done in a pull request. First off, pull all changes from the master branch, and after developing, the changelog must be updated. After that, all of the changes must be squashed and merged.
+Every feature must be done in a pull request. First off, pull all changes from the master branch. After finishing up all of the changes made, also merge with the master branch. Create a pull request, and either review it yourself, or ask a peer to do so. After that, all of the changes must be squashed and merged back into the master branch.

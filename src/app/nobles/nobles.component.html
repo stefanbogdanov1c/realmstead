@@ -1,0 +1,32 @@
+@if (nobles$ | async; as nobles) {
+<div class="flex flex-col gap-2">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+    @for (noble of nobles; track noble.name) {
+      <div class="border border-red-800 p-4 shadow-md w-full">
+        <div class="flex flex-col gap-2">
+          <div class="flex flex-col gap-2">
+            <div class="flex gap-2 items-center justify-between">
+              <span class="cursive">Title:</span> <span class="text-3xl">{{ noble.title }}</span>
+            </div>
+            <div class="flex gap-2 items-center justify-between">
+              <span class="cursive">Name:</span> <span class="text-3xl">{{ noble.name }}</span>
+            </div>
+            <div class="flex gap-2 items-center justify-between">
+              <span class="cursive">Last Name:</span> <span class="text-3xl">{{ noble.lastName }}</span>
+            </div>
+            <div class="flex gap-2 items-center justify-between">
+              <span class="cursive">Age:</span> <span class="text-3xl">{{ noble.age }}</span>
+            </div>
+          </div>
+          <div class="flex gap-2 justify-around">
+            <button class="btn-info" (click)="onOpenNobleInfo(noble)">Noble Info</button>
+            <button class="btn" (click)="onEditNoble(noble)">Edit Noble</button>
+            <button class="btn-danger" (click)="onDeleteNoble(noble._id)">Delete Noble</button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+  <button class="btn" (click)="onCreateNoble()">Create a new noble</button>
+</div>
+}

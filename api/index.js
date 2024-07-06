@@ -26,7 +26,6 @@ app.post('/api/nobles', (req, res) => {
   newNoble.save()
     .then(savedNoble => {
       res.status(201).json(savedNoble);
-      console.log('saved successfuly');
     })
     .catch(err => {
       res.status(500).json({ error: err.message });
@@ -63,7 +62,6 @@ app.get('/api/nobles/:id', (req, res) => {
 // DELETE a single noble by ID
 app.delete('/api/nobles/:id', (req, res) => {
   const nobleId = req.params.id;
-  console.log(req);
 
   Noble.findByIdAndDelete(nobleId)
     .then(deletedNoble => {
@@ -78,19 +76,44 @@ app.delete('/api/nobles/:id', (req, res) => {
 });
 
 // Update a single noble by ID
-app.put('/api/nobles/:id', (req, res) => {
+app.put('/api/nobles/:id', async (req, res) => {
   const nobleId = req.params.id;
+  const updateObject = { ...req.body };
+  const unsetObject = {};
 
-  Noble.findByIdAndUpdate(nobleId, req.body, { new: true })
-    .then(updatedNoble => {
-      if (!updatedNoble) {
-        return res.status(404).json({ error: 'Noble not found' });
-      }
-      res.json(updatedNoble);
-    })
-    .catch(err => {
-      res.status(500).json({ error: err.message });
-    });
+  // Check for fields to unset
+  if (!updateObject.hasOwnProperty('spouseId')) {
+    unsetObject.spouseId = "";
+  }
+  if (!updateObject.hasOwnProperty('motherId')) {
+    unsetObject.motherId = "";
+  }
+  if (!updateObject.hasOwnProperty('fatherId')) {
+    unsetObject.fatherId = "";
+  }
+
+  // Create the update query
+  const updateQuery = {
+    ...updateObject,
+    ...(Object.keys(unsetObject).length > 0 ? { $unset: unsetObject } : {}),
+  };
+
+  try {
+    // Update noble document
+    const updatedNoble = await Noble.findByIdAndUpdate(
+      nobleId,
+      updateQuery,
+      { new: true } // To return the updated document
+    );
+
+    if (!updatedNoble) {
+      return res.status(404).json({ error: 'Noble not found' });
+    }
+
+    res.json(updatedNoble);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 /**

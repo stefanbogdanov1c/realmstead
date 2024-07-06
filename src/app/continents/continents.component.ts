@@ -6,7 +6,7 @@ import { ContinentDetailComponent } from '../continent-detail/continent-detail.c
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectContinents } from '../app.store';
-import { HttpService } from '../http-service.service';
+import { HttpService } from '../http.service';
 
 @Component({
   selector: 'app-continents',

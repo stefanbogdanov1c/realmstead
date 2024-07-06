@@ -2,14 +2,91 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "CloisterBlack";
+  src: url("./assets/CloisterBlack.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "PfefferMediaeval";
+  src: url("./assets/PfefferMediaeval.ttf") format("truetype");
+}
+
+body {
+  font-family: "PfefferMediaeval", sans-serif;
+  font-size: x-large;
+  color: black !important;
+}
+
+.wooden-table {
+  position: absolute;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+}
+
+.wooden-table::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../src/assets/table.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  filter: blur(5px);
+  z-index: -3;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+h1, h2, h3, h4, h5, h6, label, th, .cursive {
+  font-family: "CloisterBlack", sans-serif;
+  font-size: xx-large;
+  color: maroon !important;
+}
+
 .btn {
-  @apply p-2 bg-blue-500 disabled:cursor-default disabled:opacity-80;
+  @apply p-2 bg-blue-800 hover:bg-blue-900 text-white rounded-lg disabled:cursor-default disabled:opacity-80 disabled:hover:bg-blue-800;
 }
 
 .btn-danger {
-  @apply btn bg-red-500;
+  @apply p-2 bg-red-800 hover:bg-red-900 text-white rounded-lg disabled:cursor-default disabled:opacity-80;
 }
 
 .btn-info {
-  @apply btn bg-yellow-500;
+  @apply p-2 bg-amber-500 hover:bg-amber-600 rounded-lg disabled:cursor-default disabled:opacity-80;
+}
+
+.border-red {
+  border-style: ridge;
+  border-color: red;
+  border-width: 10px;
+  margin: 10px;
+}
+
+.paper {
+  background-color: #fdf5e6; /* A light beige color */
+  background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 50%
+    ),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 50%, transparent 50%);
+}
+
+.paper2 {
+  background: radial-gradient(ellipse at center, #e5e696 64%,#d1d360 100%);
+}
+
+.form-group {
+  flex: 1 1 auto;
+  @apply border border-red-800 p-2 flex flex-col gap-2;
 }

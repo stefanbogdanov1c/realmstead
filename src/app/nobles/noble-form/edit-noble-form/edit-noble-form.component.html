@@ -1,0 +1,4 @@
+@if(nobles$ | async; as nobles) {
+  <h2 class="mb-2 text-5xl">Edit Noble</h2>
+  <app-noble-form [nobles]="nobles" [noble]="noble"></app-noble-form>
+}

@@ -11,7 +11,7 @@ import { Continent, Kingdom, City, Family, Noble } from './types';
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { switchMap, map, catchError, of, tap, mergeMap } from 'rxjs';
-import { HttpService } from './http-service.service';
+import { HttpService } from './http.service';
 
 export const fetchAllNobles = createAction('[Noble] Fetch Nobles');
 
@@ -28,6 +28,11 @@ export const createNewNoble = createAction(
 export const deleteNoble = createAction(
   '[Noble] Delete Noble',
   props<{ id: string }>()
+);
+
+export const updateNoble = createAction(
+  '[Noble] Update Noble',
+  props<Noble>()
 );
 
 export interface AppState {
@@ -61,7 +66,7 @@ export const selectAllNobles = createSelector(
 export const selectNobleById = (id: string) =>
   createSelector(selectAllNobles, (nobles: Noble[]) =>
     nobles.find((noble) => noble._id === id)
-  );
+);
 
 export const selectContinents = createSelector(
   selectAppState,
@@ -76,7 +81,7 @@ export const selectKingdoms = createSelector(
 export const selectKingdomByName = (kingdomName: string | null) =>
   createSelector(selectKingdoms, (kingdoms: Kingdom[]) =>
     kingdoms.find((kingdom) => kingdom.name === kingdomName)
-  );
+);
 
 @Injectable()
 export class AppEffects {
@@ -130,6 +135,24 @@ export class AppEffects {
           ),
           catchError(() => of(setNobles({ nobles: [] })))
         )
+      )
+    )
+  );
+
+  updateNoble$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateNoble),
+      mergeMap((noble) => {
+        return this.httpService.updateNoble(noble).pipe(
+          mergeMap(() =>
+            this.httpService.fetchAllNobles().pipe(
+              map((nobles) => setNobles({ nobles })),
+              catchError(() => of(setNobles({ nobles: [] })))
+            )
+          ),
+          catchError(() => of(setNobles({ nobles: [] })))
+        )
+      }
       )
     )
   );
