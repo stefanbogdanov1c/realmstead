@@ -198,6 +198,7 @@ app.delete('/api/families/:id', (req, res) => {
 /**
  * CITY REQUESTS
  */
+
 // POST a new city
 app.post('/api/cities', (req, res) => {
   const newCity = new City(req.body);
@@ -213,10 +214,8 @@ app.post('/api/cities', (req, res) => {
 // GET all cities
 app.get('/api/cities', (req, res) => {
   City.find()
-    .populate('rulerFamily')
-    .exec()
     .then(cities => {
-      res.json(cities);
+      res.status(200).json(cities);
     })
     .catch(err => {
       res.status(500).json({ error: err.message });
@@ -228,29 +227,11 @@ app.get('/api/cities/:id', (req, res) => {
   const cityId = req.params.id;
 
   City.findById(cityId)
-    .populate('rulerFamily')
-    .exec()
     .then(city => {
       if (!city) {
         return res.status(404).json({ error: 'City not found' });
       }
       res.json(city);
-    })
-    .catch(err => {
-      res.status(500).json({ error: err.message });
-    });
-});
-
-// PUT (update) a single city by ID
-app.put('/api/cities/:id', (req, res) => {
-  const cityId = req.params.id;
-
-  City.findByIdAndUpdate(cityId, req.body, { new: true })
-    .then(updatedCity => {
-      if (!updatedCity) {
-        return res.status(404).json({ error: 'City not found' });
-      }
-      res.json(updatedCity);
     })
     .catch(err => {
       res.status(500).json({ error: err.message });
@@ -271,6 +252,44 @@ app.delete('/api/cities/:id', (req, res) => {
     .catch(err => {
       res.status(500).json({ error: err.message });
     });
+});
+
+// Update a single city by ID
+app.put('/api/cities/:id', async (req, res) => {
+  const cityId = req.params.id;
+  const updateObject = { ...req.body };
+  const unsetObject = {};
+
+  // Check for fields to unset
+  if (!updateObject.hasOwnProperty('population')) {
+    unsetObject.population = "";
+  }
+  if (!updateObject.hasOwnProperty('description')) {
+    unsetObject.description = "";
+  }
+
+  // Create the update query
+  const updateQuery = {
+    ...updateObject,
+    ...(Object.keys(unsetObject).length > 0 ? { $unset: unsetObject } : {}),
+  };
+
+  try {
+    // Update city document
+    const updatedCity = await City.findByIdAndUpdate(
+      cityId,
+      updateQuery,
+      { new: true } // To return the updated document
+    );
+
+    if (!updatedCity) {
+      return res.status(404).json({ error: 'City not found' });
+    }
+
+    res.json(updatedCity);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 /**

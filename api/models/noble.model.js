@@ -12,7 +12,6 @@ const nobleSchema = new mongoose.Schema({
   title: { type: String },
   nickname: { type: String },
   description: { type: String },
-  picture: { type: String },
 });
 
 module.exports = mongoose.model('Noble', nobleSchema);

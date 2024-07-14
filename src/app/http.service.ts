@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Noble } from './types';
+import { City, Noble } from './types';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
@@ -24,5 +24,22 @@ export class HttpService {
 
   updateNoble(noble: Noble) {
     return this.http.put(`${this.baseUrl}/api/nobles/${noble._id}`, noble);
+  }
+
+
+  fetchAllCities(): Observable<City[]> {
+    return this.http.get<City[]>(`${this.baseUrl}/api/cities`);
+  }
+
+  createNewCity(city: City) {
+    return this.http.post(`${this.baseUrl}/api/cities`, city);
+  }
+
+  deleteCity(id: string) {
+    return this.http.delete(`${this.baseUrl}/api/cities/${id}`);
+  }
+
+  updateCity(city: City) {
+    return this.http.put(`${this.baseUrl}/api/cities/${city._id}`, city);
   }
 }

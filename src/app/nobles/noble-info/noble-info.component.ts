@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HttpService } from '../../http.service';
 import { Noble } from '../../types';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { Observable, take } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import {
   deleteNoble,
@@ -53,8 +53,6 @@ export class NobleInfoComponent implements OnInit {
             if(noble.spouseId) {
               this.spouseNoble$ = this.store.select(selectNobleById(noble.spouseId))
             }
-          } else {
-            this.router.navigate(['/nobles']);
           }
         });
       } else {
@@ -79,8 +77,8 @@ export class NobleInfoComponent implements OnInit {
     this.store.dispatch(deleteNoble({ id }));
   }
 
-  onEditNoble(noble: Noble) {
-    this.router.navigate(['/nobles', noble._id, 'edit']);
+  onEditNoble(id: string) {
+    this.router.navigate(['/nobles', id, 'edit']);
   }
 
   onGoBack() {

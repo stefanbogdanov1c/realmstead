@@ -17,9 +17,9 @@ export interface Kingdom {
 }
 
 export interface City {
+  _id: string;
   name: string;
   population?: number;
-  rulerFamily?: Family;
   description?: string;
 }
 

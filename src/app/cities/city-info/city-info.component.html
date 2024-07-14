@@ -1,0 +1,21 @@
+<div class="p-4">
+  @if(city) {
+  <div class="flex gap-2 items-center pb-2 mb-2 border-b-2 border-red-800">
+    <h1 class="text-5xl">{{city.name}}</h1>
+  </div>
+  <div class="flex flex-col gap-2">
+    <div class="flex-col md:flex-row flex gap-2 items-center">
+      <h1>Population:</h1>
+      <span>{{city.population}}</span>
+    </div>
+    <div class="my-4">
+      <span>{{city.description}}</span>
+    </div>
+  </div>
+  <div class="flex flex-col md:flex-row gap-2 justify-between">
+    <button class="btn-info w-full" (click)="onGoBack()">Go Back</button>
+    <button class="btn w-full" (click)="onEditCity(city._id)">Edit City</button>
+    <button class="btn-danger w-full" (click)="onDeleteCity(city._id)">Delete City</button>
+  </div>
+  }
+</div>

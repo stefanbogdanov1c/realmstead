@@ -2,48 +2,48 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { HttpService } from '../http.service';
-import { Noble } from '../types';
+import { City } from '../types';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import {
-  deleteNoble,
-  fetchAllNobles,
-  selectAllNobles,
+  deleteCity,
+  fetchAllCities,
+  selectAllCities,
 } from '../app.store';
 
 @Component({
-  selector: 'app-nobles',
+  selector: 'app-cities',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
-  templateUrl: 'nobles.component.html',
+  templateUrl: 'cities.component.html',
   styles: ``,
 })
-export class NoblesComponent implements OnInit {
+export class CitiesComponent implements OnInit {
   httpService = inject(HttpService);
   fb = inject(FormBuilder);
   store = inject(Store);
   router = inject(Router);
 
   ngOnInit() {
-    this.store.dispatch(fetchAllNobles());
+    this.store.dispatch(fetchAllCities());
   }
 
-  nobles$: Observable<Noble[]> = this.store.pipe(select(selectAllNobles));
+  cities$: Observable<City[]> = this.store.pipe(select(selectAllCities));
 
-  onDeleteNoble(id: string) {
-    this.store.dispatch(deleteNoble({ id }));
+  onDeleteCity(id: string) {
+    this.store.dispatch(deleteCity({ id }));
   }
 
-  onEditNoble(noble: Noble) {
-    this.router.navigate(['/nobles', noble._id, 'edit']);
+  onEditCity(city: City) {
+    this.router.navigate(['/cities', city._id, 'edit']);
   }
 
-  onOpenNobleInfo(noble: Noble) {
-    this.router.navigate(['/nobles', noble._id]);
+  onOpenCityInfo(city: City) {
+    this.router.navigate(['/cities', city._id]);
   }
 
-  onCreateNoble() {
-    this.router.navigate(['/nobles', 'create']);
+  onCreateCity() {
+    this.router.navigate(['/cities', 'create']);
   }
 }

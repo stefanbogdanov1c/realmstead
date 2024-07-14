@@ -1,17 +1,18 @@
 <div class="p-4">
 
-@if(noble) {
+  @if(noble) {
   <div class="flex gap-2 items-center pb-2 mb-2 border-b-2 border-red-800">
     <h1 class="text-5xl">{{noble.title}} {{ noble.name}} {{noble.lastName}} ({{noble.age}})
-      @if(fatherNoble$ | async; as fatherNoble) {<span> child of  {{fatherNoble.title}} {{fatherNoble.name}} {{fatherNoble.lastName}}</span>} 
+      @if(fatherNoble$ | async; as fatherNoble) {<span> child of {{fatherNoble.title}} {{fatherNoble.name}}
+        {{fatherNoble.lastName}}</span>}
     </h1>
   </div>
   <div class="flex flex-col gap-2">
     @if(noble.nickname) {
-      <div class="flex-col md:flex-row flex gap-2 items-center">
-        <h1>Nickname:</h1>
-        <span>{{noble.nickname}}</span>
-      </div>
+    <div class="flex-col md:flex-row flex gap-2 items-center">
+      <h1>Nickname:</h1>
+      <span>{{noble.nickname}}</span>
+    </div>
     }
     <div class="flex-col md:flex-row flex gap-2 items-center">
       <h1>Alive:</h1>
@@ -22,25 +23,25 @@
       <span>{{noble.gender}}</span>
     </div>
     @if(fatherNoble$ | async; as fatherNoble) {
-      <div class="flex-col md:flex-row flex gap-2 items-center">
-        <h1>Father:</h1>
-        <span>{{fatherNoble.title}} {{fatherNoble.name}} {{fatherNoble.lastName}} ({{fatherNoble.age}})</span>
-        <button class="btn-info" (click)="onGoToFather(noble)">Noble Info</button>
-      </div>
+    <div class="flex-col md:flex-row flex gap-2 items-center">
+      <h1>Father:</h1>
+      <span>{{fatherNoble.title}} {{fatherNoble.name}} {{fatherNoble.lastName}} ({{fatherNoble.age}})</span>
+      <button class="btn-info" (click)="onGoToFather(noble)">Noble Info</button>
+    </div>
     }
     @if(motherNoble$ | async; as motherNoble) {
-      <div class="flex-col md:flex-row flex gap-2 items-center">
-        <h1>Mother:</h1>
-        <span>{{motherNoble.title}} {{motherNoble.name}} {{motherNoble.lastName}} ({{motherNoble.age}})</span>
-        <button class="btn-info" (click)="onGoToMother(noble)">Noble Info</button>
-      </div>
+    <div class="flex-col md:flex-row flex gap-2 items-center">
+      <h1>Mother:</h1>
+      <span>{{motherNoble.title}} {{motherNoble.name}} {{motherNoble.lastName}} ({{motherNoble.age}})</span>
+      <button class="btn-info" (click)="onGoToMother(noble)">Noble Info</button>
+    </div>
     }
     @if(spouseNoble$ | async; as spouseNoble) {
-      <div class="flex-col md:flex-row flex gap-2 items-center">
-        <h1>Spouse:</h1>
-        <span>{{spouseNoble.title}} {{spouseNoble.name}} {{spouseNoble.lastName}} ({{spouseNoble.age}})</span>
-        <button class="btn-info" (click)="onGoToSpouse(noble)">Noble Info</button>
-      </div>
+    <div class="flex-col md:flex-row flex gap-2 items-center">
+      <h1>Spouse:</h1>
+      <span>{{spouseNoble.title}} {{spouseNoble.name}} {{spouseNoble.lastName}} ({{spouseNoble.age}})</span>
+      <button class="btn-info" (click)="onGoToSpouse(noble)">Noble Info</button>
+    </div>
     }
     <div class="my-4">
       <span>{{noble.description}}</span>
@@ -48,8 +49,8 @@
   </div>
   <div class="flex flex-col md:flex-row gap-2 justify-between">
     <button class="btn-info w-full" (click)="onGoBack()">Go Back</button>
-    <button class="btn w-full" (click)="onEditNoble(noble)">Edit Noble</button>
+    <button class="btn w-full" (click)="onEditNoble(noble._id)">Edit Noble</button>
     <button class="btn-danger w-full" (click)="onDeleteNoble(noble._id)">Delete Noble</button>
   </div>
-}
+  }
 </div>
