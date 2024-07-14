@@ -3,11 +3,10 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HttpService } from '../../../http.service';
 import { Noble } from '../../../types';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
-import { selectAllNobles, selectNobleById, updateNoble } from '../../../app.store';
+import { fetchAllNobles, selectAllNobles, selectNobleById } from '../../../app.store';
 import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
 import { NobleFormComponent } from '../noble-form.component';
 
 @Component({
@@ -28,14 +27,13 @@ export class EditNobleFormComponent implements OnInit {
   noble: Noble | null = null;
 
   ngOnInit(): void {
+    this.store.dispatch(fetchAllNobles());
     this.route.paramMap.subscribe(params => {
       const id = params.get('nobleId');
       if (id) {
         this.store.select(selectNobleById(id)).subscribe(noble => {
           if (noble !== undefined) {
             this.noble = noble;
-          } else {
-            this.router.navigate(['/nobles']);
           }
         });
       } else {

@@ -7,6 +7,7 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import {
   deleteCity,
+  fetchAllCities,
   selectCityById,
 } from '../../app.store';
 
@@ -27,6 +28,7 @@ export class CityInfoComponent implements OnInit {
   city: City | null = null;
 
   ngOnInit(): void {
+    this.store.dispatch(fetchAllCities());
     this.route.paramMap.subscribe(params => {
       const id = params.get('cityId');
       if (id) {

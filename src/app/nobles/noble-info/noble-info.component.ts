@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import {
   deleteNoble,
+  fetchAllNobles,
   selectAllNobles,
   selectNobleById,
 } from '../../app.store';
@@ -34,6 +35,7 @@ export class NobleInfoComponent implements OnInit {
   spouseNoble$?: Observable<Noble | undefined>;
 
   ngOnInit(): void {
+    this.store.dispatch(fetchAllNobles());
     this.route.paramMap.subscribe(params => {
       const id = params.get('nobleId');
       if (id) {

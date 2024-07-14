@@ -5,7 +5,7 @@ import { HttpService } from '../../../http.service';
 import { City } from '../../../types';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { selectCityById } from '../../../app.store';
+import { fetchAllCities, selectCityById } from '../../../app.store';
 import { CityFormComponent } from '../city-form.component';
 
 @Component({
@@ -25,14 +25,13 @@ export class EditCityFormComponent implements OnInit {
   city: City | null = null;
 
   ngOnInit(): void {
+    this.store.dispatch(fetchAllCities());
     this.route.paramMap.subscribe(params => {
       const id = params.get('cityId');
       if (id) {
         this.store.select(selectCityById(id)).subscribe(city => {
           if (city !== undefined) {
             this.city = city;
-          } else {
-            this.router.navigate(['/cities']);
           }
         });
       } else {
