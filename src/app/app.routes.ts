@@ -6,12 +6,17 @@ import { NoblesComponent } from './nobles/nobles.component';
 import { EditNobleFormComponent } from './nobles/noble-form/edit-noble-form/edit-noble-form.component';
 import { NobleInfoComponent } from './nobles/noble-info/noble-info.component';
 import { CreateNobleFormComponent } from './nobles/noble-form/create-noble-form/create-noble-form.component';
+import { CitiesComponent } from './cities/cities.component';
+import { CreateCityFormComponent } from './cities/city-form/create-city-form/create-city-form.component';
+import { EditCityFormComponent } from './cities/city-form/edit-city-form/edit-city-form.component';
+import { CityInfoComponent } from './cities/city-info/city-info.component';
+import { HomeComponent } from './home/home.component';
 
 export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    component: NoblesComponent,
+    component: HomeComponent,
   },
   {
     path: 'continents',
@@ -42,5 +47,22 @@ export const routes: Routes = [
   {
     path: 'nobles/:nobleId/edit',
     component: EditNobleFormComponent,
+  },
+
+  {
+    path: 'cities',
+    component: CitiesComponent,
+  },
+  {
+    path: 'cities/create',
+    component: CreateCityFormComponent,
+  },
+  {
+    path: 'cities/:cityId',
+    component: CityInfoComponent,
+  },
+  {
+    path: 'cities/:cityId/edit',
+    component: EditCityFormComponent,
   },
 ];

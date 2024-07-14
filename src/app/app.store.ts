@@ -35,6 +35,28 @@ export const updateNoble = createAction(
   props<Noble>()
 );
 
+export const fetchAllCities = createAction('[City] Fetch Cities');
+
+export const setCities = createAction(
+  '[City] Set Cities',
+  props<{ cities: City[] }>()
+);
+
+export const createNewCity = createAction(
+  '[City] Create a new City',
+  props<City>()
+);
+
+export const deleteCity = createAction(
+  '[City] Delete City',
+  props<{ id: string }>()
+);
+
+export const updateCity = createAction(
+  '[City] Update City',
+  props<City>()
+);
+
 export interface AppState {
   continents: Continent[];
   kingdoms: Kingdom[];
@@ -53,7 +75,8 @@ export const initialState: AppState = {
 
 export const appReducer = createReducer(
   initialState,
-  on(setNobles, (state, { nobles }) => ({ ...state, nobles }))
+  on(setNobles, (state, { nobles }) => ({ ...state, nobles })),
+  on(setCities, (state, { cities }) => ({ ...state, cities })),
 );
 
 const selectAppState = createFeatureSelector<AppState>('app');
@@ -66,6 +89,16 @@ export const selectAllNobles = createSelector(
 export const selectNobleById = (id: string) =>
   createSelector(selectAllNobles, (nobles: Noble[]) =>
     nobles.find((noble) => noble._id === id)
+);
+
+export const selectAllCities = createSelector(
+  selectAppState,
+  (state) => state.cities
+);
+
+export const selectCityById = (id: string) =>
+  createSelector(selectAllCities, (cities: City[]) =>
+    cities.find((city) => city._id === id)
 );
 
 export const selectContinents = createSelector(
@@ -153,6 +186,72 @@ export class AppEffects {
           catchError(() => of(setNobles({ nobles: [] })))
         )
       }
+      )
+    )
+  );
+
+  fetchCities$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fetchAllCities),
+      switchMap(() =>
+        this.httpService.fetchAllCities().pipe(
+          map((cities) => setCities({ cities })),
+          catchError((error) => {
+            console.error('Error fetching cities:', error);
+            return of(setCities({ cities: [] }));
+          })
+        )
+      )
+    )
+  );
+
+  deleteCity$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteCity),
+      mergeMap(({ id }) =>
+        this.httpService.deleteCity(id).pipe(
+          mergeMap(() =>
+            this.httpService.fetchAllCities().pipe(
+              map((cities) => setCities({ cities })),
+              catchError(() => of(setCities({ cities: [] })))
+            )
+          ),
+          catchError(() => of(setCities({ cities: [] })))
+        )
+      )
+    )
+  );
+
+  createNewCity$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createNewCity),
+      mergeMap((city) =>
+        this.httpService.createNewCity(city).pipe(
+          mergeMap(() =>
+            this.httpService.fetchAllCities().pipe(
+              map((cities) => setCities({ cities })),
+              catchError(() => of(setCities({ cities: [] })))
+            )
+          ),
+          catchError(() => of(setCities({ cities: [] })))
+        )
+      )
+    )
+  );
+
+  updateCity$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateCity),
+      mergeMap((city) =>
+        this.httpService.updateCity(city).pipe(
+          mergeMap(() =>
+            this.httpService.fetchAllCities().pipe(
+              map((cities) => setCities({ cities })),
+              catchError(() => of(setCities({ cities: [] })))
+            )
+          ),
+          catchError(() => of(setCities({ cities: [] })))
+        )
       )
     )
   );

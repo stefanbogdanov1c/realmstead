@@ -133,8 +133,6 @@ export class NobleFormComponent implements OnChanges {
         this.store.dispatch(updateNoble(updatedNoble as Noble));
       });
 
-      // Update the current noble
-
       // Update the new spouse if there is one
       if (noble.spouseId) {
         const newSpouse = this.nobles.find(spouseNoble => spouseNoble._id === noble.spouseId);
