@@ -7,7 +7,7 @@ import {
   on,
   props,
 } from '@ngrx/store';
-import { Continent, Kingdom, City, Family, Noble } from './types';
+import { Kingdom, City, Family, Noble } from './types';
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { switchMap, map, catchError, of, tap, mergeMap } from 'rxjs';
@@ -58,7 +58,6 @@ export const updateCity = createAction(
 );
 
 export interface AppState {
-  continents: Continent[];
   kingdoms: Kingdom[];
   cities: City[];
   families: Family[];
@@ -66,7 +65,6 @@ export interface AppState {
 }
 
 export const initialState: AppState = {
-  continents: [],
   kingdoms: [],
   cities: [],
   families: [],
@@ -99,11 +97,6 @@ export const selectAllCities = createSelector(
 export const selectCityById = (id: string) =>
   createSelector(selectAllCities, (cities: City[]) =>
     cities.find((city) => city._id === id)
-);
-
-export const selectContinents = createSelector(
-  selectAppState,
-  (state) => state.continents
 );
 
 export const selectKingdoms = createSelector(

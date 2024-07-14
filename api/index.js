@@ -6,7 +6,6 @@ const Noble = require('./models/noble.model');
 const Family = require('./models/family.model');
 const City = require('./models/city.model');
 const Kingdom = require('./models/kingdom.model');
-const Continent = require('./models/continent.model');
 
 const app = express();
 
@@ -364,72 +363,6 @@ app.delete('/api/kingdoms/:id', (req, res) => {
         return res.status(404).json({ error: 'Kingdom not found' });
       }
       res.json({ message: 'Kingdom deleted successfully' });
-    })
-    .catch(err => {
-      res.status(500).json({ error: err.message });
-    });
-});
-
-/**
- * CONTINENT REQUESTS
- */
-// GET all continents
-app.get('/api/continents', (req, res) => {
-  Continent.find()
-    .populate('kingdoms')
-    .exec()
-    .then(continents => {
-      res.json(continents);
-    })
-    .catch(err => {
-      res.status(500).json({ error: err.message });
-    });
-});
-
-// GET a single continent by ID
-app.get('/api/continents/:id', (req, res) => {
-  const continentId = req.params.id;
-
-  Continent.findById(continentId)
-    .populate('kingdoms')
-    .exec()
-    .then(continent => {
-      if (!continent) {
-        return res.status(404).json({ error: 'Continent not found' });
-      }
-      res.json(continent);
-    })
-    .catch(err => {
-      res.status(500).json({ error: err.message });
-    });
-});
-
-// PUT (update) a single continent by ID
-app.put('/api/continents/:id', (req, res) => {
-  const continentId = req.params.id;
-
-  Continent.findByIdAndUpdate(continentId, req.body, { new: true })
-    .then(updatedContinent => {
-      if (!updatedContinent) {
-        return res.status(404).json({ error: 'Continent not found' });
-      }
-      res.json(updatedContinent);
-    })
-    .catch(err => {
-      res.status(500).json({ error: err.message });
-    });
-});
-
-// DELETE a single continent by ID
-app.delete('/api/continents/:id', (req, res) => {
-  const continentId = req.params.id;
-
-  Continent.findByIdAndDelete(continentId)
-    .then(deletedContinent => {
-      if (!deletedContinent) {
-        return res.status(404).json({ error: 'Continent not found' });
-      }
-      res.json({ message: 'Continent deleted successfully' });
     })
     .catch(err => {
       res.status(500).json({ error: err.message });

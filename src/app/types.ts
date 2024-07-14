@@ -1,12 +1,3 @@
-export interface Continent {
-  name: string;
-  kingdoms: Kingdom[];
-  towns: number;
-  castles: number;
-  villages: number;
-  description?: string;
-}
-
 export interface Kingdom {
   name: string;
   ruler?: Noble;
