@@ -10,6 +10,12 @@ export class HttpService {
   http = inject(HttpClient);
   baseUrl = 'http://localhost:3000';
 
+  search(query: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/search`, {
+      params: { query },
+    });
+  }
+
   fetchAllNobles(): Observable<Noble[]> {
     return this.http.get<Noble[]>(`${this.baseUrl}/api/nobles`);
   }

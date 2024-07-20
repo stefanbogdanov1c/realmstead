@@ -8,4 +8,6 @@ const familySchema = new mongoose.Schema({
   description: { type: String },
 });
 
+familySchema.index({ name: 'text', description: 'text' });
+
 module.exports = mongoose.model('Family', familySchema);
