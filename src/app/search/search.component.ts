@@ -1,4 +1,3 @@
-// search.component.ts
 import { Component, inject } from '@angular/core';
 import { HttpService } from '../http.service';
 import { CommonModule } from '@angular/common';
