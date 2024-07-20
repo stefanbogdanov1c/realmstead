@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { FamiliesComponent } from './families/families.component';
 import { CreateFamilyFormComponent } from './families/family-form/create-family-form/create-family-form.component';
 import { EditFamilyFormComponent } from './families/family-form/edit-family-form/edit-family-form.component';
+import { FamilyInfoComponent } from './families/family-info/family-info.component';
 
 export const routes: Routes = [
   {
@@ -62,10 +63,10 @@ export const routes: Routes = [
     path: 'families/create',
     component: CreateFamilyFormComponent,
   },
-  // {
-  //   path: 'families/:familyId',
-  //   component: FamilyInfoComponent,
-  // },
+  {
+    path: 'families/:familyId',
+    component: FamilyInfoComponent,
+  },
   {
     path: 'families/:familyId/edit',
     component: EditFamilyFormComponent,

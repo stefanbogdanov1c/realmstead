@@ -45,6 +45,7 @@ export class CityInfoComponent implements OnInit {
 
   onDeleteCity(id: string) {
     this.store.dispatch(deleteCity({ id }));
+    this.onGoBack();
   }
 
   onEditCity(id: string) {
