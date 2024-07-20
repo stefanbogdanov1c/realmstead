@@ -1,0 +1,84 @@
+<form [formGroup]="familyForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-2">
+  <div class="flex flex-wrap gap-2">
+    <div class="form-group flex-1 min-w-[200px]">
+      <label for="name" class="block font-medium">Family Name:</label>
+      <input id="name" type="text" class="mt-1 block w-full p-2 border rounded-lg text-black" formControlName="name" />
+      <div
+        *ngIf="familyForm.controls['name']?.invalid && (familyForm.controls['name']?.dirty || familyForm.controls['name']?.touched)"
+        class="text-red-600 mt-1">
+        Family name is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="rulerId">Ruler:</label>
+      <select id="rulerId" formControlName="rulerId" (change)="addMember($event)"
+        class="mt-1 block w-full p-2 border rounded-lg text-black">
+        <option value=""></option>
+        @for(noble of nobles; track noble.name){
+        @if(noble.alive) {
+        <option [value]="noble._id">
+          {{noble.title}} {{ noble.name }} {{ noble.lastName }}
+        </option>
+        }
+        }
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="founderId">Founder:</label>
+      <select id="founderId" formControlName="founderId" (change)="addMember($event)"
+        class="mt-1 block w-full p-2 border rounded-lg text-black">
+        <option value=""></option>
+        @for(noble of nobles; track noble.name){
+        <option [value]="noble._id">
+          {{noble.title}} {{ noble.name }} {{ noble.lastName }}
+        </option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="members">Members</label>
+    <div>
+      <select id="membersSelect" (change)="addMember($event, true)"
+        class="mt-1 block w-full p-2 border rounded-lg text-black">
+        <option value="">Select Noble</option>
+        @for(noble of nobles; track noble.name){
+        <option [value]="noble._id">
+          {{noble.title}} {{ noble.name }} {{ noble.lastName }}
+        </option>
+        }
+      </select>
+    </div>
+
+    <div formArrayName="members" class="mt-2 flex flex-wrap gap-4">
+      @for(member of membersArray.controls; track member; let i = $index) {
+      <div class="flex gap-2 items-center border border-red-800 p-2">
+        @for(noble of nobles; track noble) {
+        @if(noble._id === member.value) {
+        {{noble.title}} {{noble.name}} {{noble.lastName}}
+        <button type="button" (click)="removeMember(i)" class="btn-danger">Remove</button>
+        }
+        }
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea id="description" class="mt-1 block w-full p-2 border rounded-lg text-black h-48" formControlName="description"></textarea>
+  </div>
+
+
+  <div class="flex justify-between gap-2 mt-2">
+    <button type="button" routerLink="/families" class="btn-danger w-full cursor-pointer">
+      Go Back
+    </button>
+    <button type="submit" [disabled]="familyForm.invalid" class="btn w-full cursor-pointer">
+      Submit
+    </button>
+  </div>
+</form>

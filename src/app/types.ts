@@ -15,10 +15,11 @@ export interface City {
 }
 
 export interface Family {
+  _id: string;
   name: string;
-  ruler?: Noble;
-  founder?: Noble;
-  members?: Noble[];
+  rulerId?: string;
+  founderId?: string;
+  members?: string[];
   description?: string;
 }
 

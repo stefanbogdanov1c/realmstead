@@ -57,6 +57,28 @@ export const updateCity = createAction(
   props<City>()
 );
 
+export const fetchAllFamilies = createAction('[Family] Fetch Families');
+
+export const setFamilies = createAction(
+  '[Family] Set Families',
+  props<{ families: Family[] }>()
+);
+
+export const createNewFamily = createAction(
+  '[Family] Create a new Family',
+  props<Family>()
+);
+
+export const deleteFamily = createAction(
+  '[Family] Delete Family',
+  props<{ id: string }>()
+);
+
+export const updateFamily = createAction(
+  '[Family] Update Family',
+  props<Family>()
+);
+
 export interface AppState {
   kingdoms: Kingdom[];
   cities: City[];
@@ -75,6 +97,7 @@ export const appReducer = createReducer(
   initialState,
   on(setNobles, (state, { nobles }) => ({ ...state, nobles })),
   on(setCities, (state, { cities }) => ({ ...state, cities })),
+  on(setFamilies, (state, { families }) => ({ ...state, families })),
 );
 
 const selectAppState = createFeatureSelector<AppState>('app');
@@ -99,6 +122,16 @@ export const selectCityById = (id: string) =>
     cities.find((city) => city._id === id)
 );
 
+export const selectAllFamilies = createSelector(
+  selectAppState,
+  (state) => state.families
+);
+
+export const selectFamilyById = (id: string) =>
+  createSelector(selectAllFamilies, (families: Family[]) =>
+    families.find((family) => family._id === id)
+);
+
 export const selectKingdoms = createSelector(
   selectAppState,
   (state) => state.kingdoms
@@ -117,9 +150,8 @@ export class AppEffects {
   fetchNobles$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fetchAllNobles),
-      tap(() => console.log('Fetching nobles...')),
       switchMap(() =>
-        this.httpService.fetchAllNobles()!.pipe(
+        this.httpService.fetchAllNobles().pipe(
           tap((nobles) => console.log('Fetched nobles:', nobles)),
           map((nobles) => setNobles({ nobles })),
           catchError((error) => {
@@ -245,6 +277,73 @@ export class AppEffects {
           ),
           catchError(() => of(setCities({ cities: [] })))
         )
+      )
+    )
+  );
+
+  fetchFamilies$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fetchAllFamilies),
+      switchMap(() =>
+        this.httpService.fetchAllFamilies().pipe(
+          map((families) => setFamilies({ families })),
+          catchError((error) => {
+            console.error('Error fetching families:', error);
+            return of(setFamilies({ families: [] }));
+          })
+        )
+      )
+    )
+  );
+
+  deleteFamily$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteFamily),
+      mergeMap(({ id }) =>
+        this.httpService.deleteFamily(id).pipe(
+          mergeMap(() =>
+            this.httpService.fetchAllFamilies().pipe(
+              map((families) => setFamilies({ families })),
+              catchError(() => of(setFamilies({ families: [] })))
+            )
+          ),
+          catchError(() => of(setFamilies({ families: [] })))
+        )
+      )
+    )
+  );
+
+  createNewFamily$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createNewFamily),
+      mergeMap((family) =>
+        this.httpService.createNewFamily(family).pipe(
+          mergeMap(() =>
+            this.httpService.fetchAllFamilies().pipe(
+              map((families) => setFamilies({ families })),
+              catchError(() => of(setFamilies({ families: [] })))
+            )
+          ),
+          catchError(() => of(setFamilies({ families: [] })))
+        )
+      )
+    )
+  );
+
+  updateFamily$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateFamily),
+      mergeMap((family) => {
+        return this.httpService.updateFamily(family).pipe(
+          mergeMap(() =>
+            this.httpService.fetchAllFamilies().pipe(
+              map((families) => setFamilies({ families })),
+              catchError(() => of(setFamilies({ families: [] })))
+            )
+          ),
+          catchError(() => of(setFamilies({ families: [] })))
+        )
+      }
       )
     )
   );

@@ -1,0 +1,54 @@
+<div class="p-4">
+  @if(family) {
+  <div class="flex gap-2 items-center pb-2 mb-2 border-b-2 border-red-800">
+    <h1 class="text-5xl">{{ family.name}}</h1>
+  </div>
+  @if(nobles$ | async; as nobles) {
+  <div class="flex flex-col gap-2">
+    @for(noble of nobles; track noble) {
+    @if(noble._id === family.rulerId) {
+    <div class="flex-col md:flex-row flex gap-2 items-center">
+      <h1>Ruler:</h1>
+      <span>{{noble.title}} {{noble.name}} {{noble.lastName}}</span>
+      <button class="btn-info" (click)="onGoToNoble(noble._id)">Noble Info</button>
+    </div>
+    }
+    }
+    @for(noble of nobles; track noble) {
+    @if(noble._id === family.founderId) {
+    <div class="flex-col md:flex-row flex gap-2 items-center">
+      <h1>Founder:</h1>
+      <span>{{noble.title}} {{noble.name}} {{noble.lastName}}</span>
+      <button class="btn-info" (click)="onGoToNoble(noble._id)">Noble Info</button>
+    </div>
+    }
+    }
+    @if(family.members) {
+    <div class="flex flex-wrap gap-2">
+      <h1>Members:</h1>
+      @for(member of family.members; track member) {
+      @for(noble of nobles; track noble) {
+      @if(noble._id === member) {
+      <div class="flex-col md:flex-row flex gap-2 items-center">
+        <span>{{noble.title}} {{noble.name}} {{noble.lastName}}</span>
+        <button class="btn-info" (click)="onGoToNoble(noble._id)">Noble Info</button>
+      </div>
+      }
+      }
+      }
+    </div>
+    }
+
+    <div class="my-4">
+      <span>{{family.description}}</span>
+    </div>
+  </div>
+  }
+
+  <div class="flex flex-col md:flex-row gap-2 justify-between">
+    <button class="btn-info w-full" (click)="onGoBack()">Go Back</button>
+    <button class="btn w-full" (click)="onEditFamily(family._id)">Edit Family</button>
+    <button class="btn-danger w-full" (click)="onDeleteFamily(family._id)">Delete Family</button>
+  </div>
+  }
+</div>

@@ -77,6 +77,7 @@ export class NobleInfoComponent implements OnInit {
 
   onDeleteNoble(id: string) {
     this.store.dispatch(deleteNoble({ id }));
+    this.onGoBack();
   }
 
   onEditNoble(id: string) {

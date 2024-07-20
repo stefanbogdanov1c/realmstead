@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 const familySchema = new mongoose.Schema({
   name: { type: String, required: true },
-  ruler: { type: mongoose.Schema.Types.ObjectId, ref: 'Noble' },
-  founder: { type: mongoose.Schema.Types.ObjectId, ref: 'Noble' },
-  members: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Noble' }],
+  rulerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Noble', default: null },
+  founderId: { type: mongoose.Schema.Types.ObjectId, ref: 'Noble', default: null },
+  members: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Noble', default: null }],
   description: { type: String },
 });
 
