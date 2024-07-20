@@ -121,7 +121,18 @@ app.put('/api/nobles/:id', async (req, res) => {
 
 // POST a new family
 app.post('/api/families', (req, res) => {
-  const newFamily = new Family(req.body);
+  const familyData = req.body;
+
+  // Sanitize input to convert empty strings to null
+  if (familyData.rulerId === '') {
+    familyData.rulerId = null;
+  }
+  if (familyData.founderId === '') {
+    familyData.founderId = null;
+  }
+  familyData.members = familyData.members.map(member => member === '' ? null : member);
+
+  const newFamily = new Family(familyData);
   newFamily.save()
     .then(savedFamily => {
       res.status(201).json(savedFamily);
@@ -134,8 +145,6 @@ app.post('/api/families', (req, res) => {
 // GET all families
 app.get('/api/families', (req, res) => {
   Family.find()
-    .populate('ruler founder members')
-    .exec()
     .then(families => {
       res.json(families);
     })
@@ -149,8 +158,6 @@ app.get('/api/families/:id', (req, res) => {
   const familyId = req.params.id;
 
   Family.findById(familyId)
-    .populate('ruler founder members')
-    .exec()
     .then(family => {
       if (!family) {
         return res.status(404).json({ error: 'Family not found' });

@@ -1,0 +1,32 @@
+@if (families$ | async; as families) {
+<div class="flex flex-col justify-between h-full gap-2">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+    @for (family of families; track family.name) {
+    <div class="border border-red-800 p-4 shadow-md w-full">
+      <div class="flex flex-col h-full justify-between gap-2">
+        <div class="flex flex-col gap-2">
+          <div class="flex gap-2 items-center justify-between">
+            <span class="cursive">Family Name:</span> <span class="text-3xl">{{ family.name }}</span>
+          </div>
+          @if(nobles$ | async; as nobles) {
+          <div class="flex gap-2 items-center justify-between">
+            @for(noble of nobles; track noble._id) {
+            @if(noble._id === family.rulerId) {
+            <span class="cursive">Ruler:</span> <span class="text-3xl">{{ noble.name }} {{noble.lastName}}</span>
+            }
+            }
+          </div>
+          }
+        </div>
+        <div class="flex gap-2 justify-around">
+          <button class="btn-info" (click)="onOpenFamilyInfo(family)">Family Info</button>
+          <button class="btn" (click)="onEditFamily(family)">Edit Family</button>
+          <button class="btn-danger" (click)="onDeleteFamily(family._id)">Delete Family</button>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+  <button class="btn" (click)="onCreateFamily()">Create a new family</button>
+</div>
+}

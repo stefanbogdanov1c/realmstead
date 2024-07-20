@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { City, Noble } from './types';
+import { City, Family, Noble } from './types';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
@@ -41,5 +41,22 @@ export class HttpService {
 
   updateCity(city: City) {
     return this.http.put(`${this.baseUrl}/api/cities/${city._id}`, city);
+  }
+
+
+  fetchAllFamilies(): Observable<Family[]> {
+    return this.http.get<Family[]>(`${this.baseUrl}/api/families`);
+  }
+
+  createNewFamily(family: Family) {
+    return this.http.post(`${this.baseUrl}/api/families`, family);
+  }
+
+  deleteFamily(id: string) {
+    return this.http.delete(`${this.baseUrl}/api/families/${id}`);
+  }
+
+  updateFamily(family: Family) {
+    return this.http.put(`${this.baseUrl}/api/families/${family._id}`, family);
   }
 }

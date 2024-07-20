@@ -10,22 +10,15 @@ import { CreateCityFormComponent } from './cities/city-form/create-city-form/cre
 import { EditCityFormComponent } from './cities/city-form/edit-city-form/edit-city-form.component';
 import { CityInfoComponent } from './cities/city-info/city-info.component';
 import { HomeComponent } from './home/home.component';
+import { FamiliesComponent } from './families/families.component';
+import { CreateFamilyFormComponent } from './families/family-form/create-family-form/create-family-form.component';
+import { EditFamilyFormComponent } from './families/family-form/edit-family-form/edit-family-form.component';
 
 export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
     component: HomeComponent,
-  },
-  {
-    path: 'kingdoms',
-    component: KingdomsComponent,
-    children: [
-      {
-        path: ':kingdom',
-        component: KingdomDetailComponent,
-      }
-    ],
   },
   {
     path: 'nobles',
@@ -59,5 +52,22 @@ export const routes: Routes = [
   {
     path: 'cities/:cityId/edit',
     component: EditCityFormComponent,
+  },
+
+  {
+    path: 'families',
+    component: FamiliesComponent,
+  },
+  {
+    path: 'families/create',
+    component: CreateFamilyFormComponent,
+  },
+  // {
+  //   path: 'families/:familyId',
+  //   component: FamilyInfoComponent,
+  // },
+  {
+    path: 'families/:familyId/edit',
+    component: EditFamilyFormComponent,
   },
 ];
