@@ -15,6 +15,42 @@ mongoose.connect('mongodb://localhost:27017/realmstead');
 
 app.use(bodyParser.json());
 
+app.get('/search', async (req, res) => {
+  const query = req.query.query || '';
+  
+  try {
+    // Create a regex pattern for partial matching
+    const regex = new RegExp(query, 'i'); // 'i' for case-insensitive
+
+    // Search in each collection using the regex pattern
+    const nobles = await Noble.find({
+      $or: [
+        { name: { $regex: regex } },
+        { lastName: { $regex: regex } },
+        { description: { $regex: regex } }
+      ]
+    });
+
+    const families = await Family.find({
+      $or: [
+        { name: { $regex: regex } },
+        { description: { $regex: regex } }
+      ]
+    });
+
+    const cities = await City.find({
+      $or: [
+        { name: { $regex: regex } },
+        { description: { $regex: regex } }
+      ]
+    });
+
+    res.json({ nobles, families, cities });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 /**
  * NOBLE REQUESTS
  */

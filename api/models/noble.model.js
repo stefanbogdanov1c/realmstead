@@ -14,4 +14,6 @@ const nobleSchema = new mongoose.Schema({
   description: { type: String },
 });
 
+nobleSchema.index({ name: 'text', lastName: 'text', description: 'text', title: 'text', nickname: 'text' });
+
 module.exports = mongoose.model('Noble', nobleSchema);

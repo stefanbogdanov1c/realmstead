@@ -6,4 +6,6 @@ const citySchema = new mongoose.Schema({
   description: { type: String }
 });
 
+citySchema.index({ name: 'text', description: 'text' });
+
 module.exports = mongoose.model('City', citySchema);
