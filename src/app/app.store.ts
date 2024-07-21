@@ -75,22 +75,44 @@ export const deleteFamily = createAction(
 );
 
 export const updateFamily = createAction(
-  '[Family] Update Family',
+  '[Kingdom] Update Family',
   props<Family>()
 );
 
+export const fetchAllKingdoms = createAction('[Family] Fetch Kingdoms');
+
+export const setKingdoms = createAction(
+  '[Kingdom] Set Kingdoms',
+  props<{ kingdoms: Kingdom[] }>()
+);
+
+export const createNewKingdom = createAction(
+  '[Kingdom] Create a new Kingdom',
+  props<Kingdom>()
+);
+
+export const deleteKingdom = createAction(
+  '[Kingdom] Delete Kingdom',
+  props<{ id: string }>()
+);
+
+export const updateKingdom = createAction(
+  '[Kingdom] Update Kingdom',
+  props<Kingdom>()
+);
+
 export interface AppState {
-  kingdoms: Kingdom[];
+  nobles: Noble[];
   cities: City[];
   families: Family[];
-  nobles: Noble[];
+  kingdoms: Kingdom[];
 }
 
 export const initialState: AppState = {
-  kingdoms: [],
+  nobles: [],
   cities: [],
   families: [],
-  nobles: [],
+  kingdoms: [],
 };
 
 export const appReducer = createReducer(
@@ -98,6 +120,7 @@ export const appReducer = createReducer(
   on(setNobles, (state, { nobles }) => ({ ...state, nobles })),
   on(setCities, (state, { cities }) => ({ ...state, cities })),
   on(setFamilies, (state, { families }) => ({ ...state, families })),
+  on(setKingdoms, (state, { kingdoms }) => ({ ...state, kingdoms })),
 );
 
 const selectAppState = createFeatureSelector<AppState>('app');
@@ -132,14 +155,14 @@ export const selectFamilyById = (id: string) =>
     families.find((family) => family._id === id)
 );
 
-export const selectKingdoms = createSelector(
+export const selectAllKingdoms = createSelector(
   selectAppState,
   (state) => state.kingdoms
 );
 
-export const selectKingdomByName = (kingdomName: string | null) =>
-  createSelector(selectKingdoms, (kingdoms: Kingdom[]) =>
-    kingdoms.find((kingdom) => kingdom.name === kingdomName)
+export const selectKingdomById = (kingdomId: string | null) =>
+  createSelector(selectAllKingdoms, (kingdoms: Kingdom[]) =>
+    kingdoms.find((kingdom) => kingdom._id === kingdomId)
 );
 
 @Injectable()
@@ -342,6 +365,73 @@ export class AppEffects {
             )
           ),
           catchError(() => of(setFamilies({ families: [] })))
+        )
+      }
+      )
+    )
+  );
+
+  fetchKingdoms$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fetchAllKingdoms),
+      switchMap(() =>
+        this.httpService.fetchAllKingdoms().pipe(
+          map((kingdoms) => setKingdoms({ kingdoms })),
+          catchError((error) => {
+            console.error('Error fetching kingdoms:', error);
+            return of(setKingdoms({ kingdoms: [] }));
+          })
+        )
+      )
+    )
+  );
+
+  deleteKingdom$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteKingdom),
+      mergeMap(({ id }) =>
+        this.httpService.deleteKingdom(id).pipe(
+          mergeMap(() =>
+            this.httpService.fetchAllKingdoms().pipe(
+              map((kingdoms) => setKingdoms({ kingdoms })),
+              catchError(() => of(setKingdoms({ kingdoms: [] })))
+            )
+          ),
+          catchError(() => of(setKingdoms({ kingdoms: [] })))
+        )
+      )
+    )
+  );
+
+  createNewKingdom$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createNewKingdom),
+      mergeMap((kingdom) =>
+        this.httpService.createNewKingdom(kingdom).pipe(
+          mergeMap(() =>
+            this.httpService.fetchAllKingdoms().pipe(
+              map((kingdoms) => setKingdoms({ kingdoms })),
+              catchError(() => of(setKingdoms({ kingdoms: [] })))
+            )
+          ),
+          catchError(() => of(setKingdoms({ kingdoms: [] })))
+        )
+      )
+    )
+  );
+
+  updateKingdom$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateKingdom),
+      mergeMap((kingdom) => {
+        return this.httpService.updateKingdom(kingdom).pipe(
+          mergeMap(() =>
+            this.httpService.fetchAllKingdoms().pipe(
+              map((kingdoms) => setKingdoms({ kingdoms })),
+              catchError(() => of(setKingdoms({ kingdoms: [] })))
+            )
+          ),
+          catchError(() => of(setKingdoms({ kingdoms: [] })))
         )
       }
       )

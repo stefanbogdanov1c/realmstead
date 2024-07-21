@@ -1,9 +1,10 @@
 export interface Kingdom {
+  _id: string;
   name: string;
-  ruler?: Noble;
-  rulerFamily?: Family;
-  vassalFamilies?: Family[];
-  capital?: City;
+  rulerId?: string;
+  rulerFamilyId?: string;
+  vassalFamiliesIds?: string[];
+  capitalId?: string;
   description?: string;
 }
 

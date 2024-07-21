@@ -339,7 +339,21 @@ app.put('/api/cities/:id', async (req, res) => {
  */
 // POST a new kingdom
 app.post('/api/kingdoms', (req, res) => {
-  const newKingdom = new Kingdom(req.body);
+  const kingdomData = req.body;
+
+  // Sanitize input to convert empty strings to null
+  if (kingdomData.rulerId === '') {
+    kingdomData.rulerId = null;
+  }
+  if (kingdomData.rulerFamilyId === '') {
+    kingdomData.rulerFamilyId = null;
+  }
+  if (kingdomData.capitalId === '') {
+    kingdomData.capitalId = null;
+  }
+  kingdomData.vassalFamiliesIds = kingdomData.vassalFamiliesIds.map(familyId => familyId === '' ? null : familyId);
+
+  const newKingdom = new Kingdom(kingdomData);
   newKingdom.save()
     .then(savedKingdom => {
       res.status(201).json(savedKingdom);
@@ -352,8 +366,6 @@ app.post('/api/kingdoms', (req, res) => {
 // GET all kingdoms
 app.get('/api/kingdoms', (req, res) => {
   Kingdom.find()
-    .populate('ruler rulerFamily vassalFamilies capital')
-    .exec()
     .then(kingdoms => {
       res.json(kingdoms);
     })
@@ -383,6 +395,17 @@ app.get('/api/kingdoms/:id', (req, res) => {
 // PUT (update) a single kingdom by ID
 app.put('/api/kingdoms/:id', (req, res) => {
   const kingdomId = req.params.id;
+
+  // Preprocess the request body to handle empty strings
+  const preprocessBody = (body) => {
+    for (const key in body) {
+      if (body[key] === '') {
+        body[key] = null;
+      }
+    }
+  };
+
+  preprocessBody(req.body);
 
   Kingdom.findByIdAndUpdate(kingdomId, req.body, { new: true })
     .then(updatedKingdom => {

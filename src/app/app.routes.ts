@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { KingdomsComponent } from './kingdoms/kingdoms.component';
-import { KingdomDetailComponent } from './kingdom-detail/kingdom-detail.component';
 import { NoblesComponent } from './nobles/nobles.component';
 import { EditNobleFormComponent } from './nobles/noble-form/edit-noble-form/edit-noble-form.component';
 import { NobleInfoComponent } from './nobles/noble-info/noble-info.component';
@@ -14,6 +13,9 @@ import { FamiliesComponent } from './families/families.component';
 import { CreateFamilyFormComponent } from './families/family-form/create-family-form/create-family-form.component';
 import { EditFamilyFormComponent } from './families/family-form/edit-family-form/edit-family-form.component';
 import { FamilyInfoComponent } from './families/family-info/family-info.component';
+import { CreateKingdomFormComponent } from './kingdoms/kingdom-form/create-kingdom-form/create-kingdom-form.component';
+import { EditKingdomFormComponent } from './kingdoms/kingdom-form/edit-kingdom-form/edit-kingdom-form.component';
+import { KingdomInfoComponent } from './kingdoms/kingdom-info/kingdom-info.component';
 
 export const routes: Routes = [
   {
@@ -70,5 +72,22 @@ export const routes: Routes = [
   {
     path: 'families/:familyId/edit',
     component: EditFamilyFormComponent,
+  },
+
+  {
+    path: 'kingdoms',
+    component: KingdomsComponent,
+  },
+  {
+    path: 'kingdoms/create',
+    component: CreateKingdomFormComponent,
+  },
+  {
+    path: 'kingdoms/:kingdomId',
+    component: KingdomInfoComponent,
+  },
+  {
+    path: 'kingdoms/:kingdomId/edit',
+    component: EditKingdomFormComponent,
   },
 ];

@@ -1,0 +1,102 @@
+<form [formGroup]="kingdomForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-2">
+  <div class="flex flex-wrap gap-2">
+    <div class="form-group flex-1 min-w-[200px]">
+      <label for="name" class="block font-medium">Kingdom Name:</label>
+      <input id="name" type="text" class="mt-1 block w-full p-2 border rounded-lg text-black" formControlName="name" />
+      <div
+        *ngIf="kingdomForm.controls['name']?.invalid && (kingdomForm.controls['name']?.dirty || kingdomForm.controls['name']?.touched)"
+        class="text-red-600 mt-1">
+        Kingdom name is required.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="rulerId">Ruler:</label>
+      <select id="rulerId" formControlName="rulerId" class="mt-1 block w-full p-2 border rounded-lg text-black">
+        <option value="">Select Ruler</option>
+        @if(nobles$ | async; as nobles) {
+        @for(noble of filterValidRulers(nobles); track noble) {
+        <option [value]="noble._id">
+          {{noble.title}} {{ noble.name }} {{ noble.lastName }}
+        </option>
+        }
+        }
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="capitalId">Capital City: </label>
+      <select id="capitalId" formControlName="capitalId"
+        class="mt-1 block w-full p-2 border rounded-lg text-black">
+        <option value="">Select City</option>
+
+        @if(cities$ | async; as cities) {
+        @for(city of cities; track city) {
+        <option [value]="city._id">
+          {{ city.name }}
+        </option>
+        }
+        }
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="rulerFamilyId">Ruling Family: </label>
+      <select id="rulerFamilyId" formControlName="rulerFamilyId" (change)="addVassalFamily($event)"
+        class="mt-1 block w-full p-2 border rounded-lg text-black">
+        <option value="">Select Family</option>
+
+        @if(families$ | async; as families) {
+        @for(family of families; track family) {
+        <option [value]="family._id">
+          {{ family.name }}
+        </option>
+        }
+        }
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="vassalFamiliesIds">Vassal Families:</label>
+    <select id="vassalFamiliesSelect" (change)="addVassalFamily($event, true)"
+      class="mt-1 block w-full p-2 border rounded-lg text-black">
+      <option value="">Select Family</option>
+      @if(families$ | async; as families) {
+      @for(family of families; track family) {
+      <option [value]="family._id">{{ family.name }}</option>
+      }
+      }
+    </select>
+    <div formArrayName="vassalFamiliesIds" class="mt-2 flex flex-wrap gap-4">
+      @for (vassalFamily of vassalFamiliesArray.controls; track vassalFamily; let i = $index) {
+      <div class="flex gap-2 items-center border border-red-800 p-2">
+        @if (families$ | async; as families) {
+        @for(family of families; track family) {
+        @if(family._id === vassalFamily.value) {
+        {{ family.name }}
+        <button type="button" (click)="removeVassalFamily(i)"
+          class="btn-danger">Remove</button>
+        }
+        }
+        }
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="description">Description:</label>
+    <textarea id="description" class="mt-1 block w-full p-2 border rounded-lg text-black h-48"
+      formControlName="description"></textarea>
+  </div>
+
+
+  <div class="flex justify-between gap-2 mt-2">
+    <button type="button" routerLink="/kingdoms" class="btn-danger w-full cursor-pointer">
+      Go Back
+    </button>
+    <button type="submit" [disabled]="kingdomForm.invalid" class="btn w-full cursor-pointer">
+      Submit
+    </button>
+  </div>
+</form>

@@ -1,0 +1,79 @@
+<div class="p-4">
+  @if(kingdom) {
+  <div class="flex gap-2 items-center pb-2 mb-2 border-b-2 border-red-800">
+    <h1 class="text-5xl">{{ kingdom.name}}</h1>
+  </div>
+  @if(nobles$ | async; as nobles) {
+  <div class="flex flex-col gap-2">
+    @for(noble of nobles; track noble) {
+    @if(noble._id === kingdom.rulerId) {
+    <div class="flex-col md:flex-row flex gap-2 items-center">
+      <h1>Ruler:</h1>
+      <span>{{noble.title}} {{noble.name}} {{noble.lastName}}</span>
+      <button class="btn-info" (click)="onGoToNoble(noble._id)">Noble Info</button>
+    </div>
+    }
+    }
+
+    <div class="my-4">
+      <span>{{kingdom.description}}</span>
+    </div>
+  </div>
+  }
+
+  @if(families$ | async; as families) {
+  <div class="flex flex-col gap-2">
+    @for(family of families; track family) {
+    @if(family._id === kingdom.rulerFamilyId) {
+    <div class="flex-col md:flex-row flex gap-2 items-center">
+      <h1>Ruler Family:</h1>
+      <span>{{family.name}}</span>
+      <button class="btn-info" (click)="onGoToFamily(family._id)">Family Info</button>
+    </div>
+    }
+    }
+
+    @if(kingdom.vassalFamiliesIds) {
+    <div class="flex flex-wrap gap-4">
+      <h1>Vassal Families:</h1>
+      @for(family of families; track family) {
+      @for(vassalFamilyId of kingdom.vassalFamiliesIds; track vassalFamilyId) {
+      @if(family._id === vassalFamilyId) {
+      <div class="flex-col md:flex-row flex gap-2 items-center">
+        <span>{{family.name}}</span>
+        <button class="btn-info" (click)="onGoToFamily(family._id)">Family Info</button>
+      </div>
+      }
+
+      }
+      }
+    </div>
+    }
+
+  </div>
+  }
+
+  @if(cities$ | async; as cities) {
+  <div class="flex flex-col gap-2">
+    @for(city of cities; track city) {
+      @if(city._id === kingdom.capitalId) {
+        <div class="flex-col md:flex-row flex gap-2 items-center">
+          <h1>Capital City:</h1>
+          <span>{{city.name}}</span>
+          <button class="btn-info" (click)="onGoToCity(city._id)">City Info</button>
+        </div>
+      }
+    }  
+  </div>
+  }
+  <div class="my-4">
+    <span>{{kingdom.description}}</span>
+  </div>
+
+  <div class="flex flex-col md:flex-row gap-2 justify-between">
+    <button class="btn-info w-full" (click)="onGoBack()">Go Back</button>
+    <button class="btn w-full" (click)="onEditKingdom(kingdom._id)">Edit Kingdom</button>
+    <button class="btn-danger w-full" (click)="onDeleteKingdom(kingdom._id)">Delete Kingdom</button>
+  </div>
+  }
+</div>
