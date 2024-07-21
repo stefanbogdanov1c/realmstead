@@ -14,7 +14,7 @@
       <label for="rulerId">Ruler:</label>
       <select id="rulerId" formControlName="rulerId" (change)="addMember($event)"
         class="mt-1 block w-full p-2 border rounded-lg text-black">
-        <option value=""></option>
+        <option value="">Select Ruler</option>
         @for(noble of nobles; track noble.name){
         @if(noble.alive) {
         <option [value]="noble._id">
@@ -29,7 +29,7 @@
       <label for="founderId">Founder:</label>
       <select id="founderId" formControlName="founderId" (change)="addMember($event)"
         class="mt-1 block w-full p-2 border rounded-lg text-black">
-        <option value=""></option>
+        <option value="">Select Founder</option>
         @for(noble of nobles; track noble.name){
         <option [value]="noble._id">
           {{noble.title}} {{ noble.name }} {{ noble.lastName }}

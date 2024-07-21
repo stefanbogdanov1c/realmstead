@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { City, Family, Noble } from './types';
+import { City, Family, Kingdom, Noble } from './types';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
@@ -64,5 +64,21 @@ export class HttpService {
 
   updateFamily(family: Family) {
     return this.http.put(`${this.baseUrl}/api/families/${family._id}`, family);
+  }
+
+  fetchAllKingdoms(): Observable<Kingdom[]> {
+    return this.http.get<Kingdom[]>(`${this.baseUrl}/api/kingdoms`);
+  }
+
+  createNewKingdom(kingdom: Kingdom) {
+    return this.http.post(`${this.baseUrl}/api/kingdoms`, kingdom);
+  }
+
+  deleteKingdom(id: string) {
+    return this.http.delete(`${this.baseUrl}/api/kingdoms/${id}`);
+  }
+
+  updateKingdom(kingdom: Kingdom) {
+    return this.http.put(`${this.baseUrl}/api/kingdoms/${kingdom._id}`, kingdom);
   }
 }

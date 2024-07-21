@@ -1,12 +1,9 @@
 <div class="flex flex-col gap-4 p-4">
   <div class="flex flex-col items-center gap-4">
-    <form (ngSubmit)="onSearch()" class="w-full flex gap-2">
+    <div class="w-full flex gap-2">
       <input type="text" [(ngModel)]="query" name="searchQuery" placeholder="Search..."
-        class="form-input w-full p-2 border rounded-lg" />
-      <button type="submit" class="btn">
-        Search
-      </button>
-    </form>
+        class="form-input w-full p-2 border rounded-lg" (ngModelChange)="onSearch()" />
+    </div>
 
     <div class="w-full  mt-4">
       <div *ngIf="results.nobles?.length">
@@ -31,6 +28,18 @@
               <span class="text-red-900">{{ family.name }}</span>@if(family.description){- {{ family.description }}}
             </div>
             <a [routerLink]="'/families/'+ family._id" class="btn-info w-fit">Family Info</a>
+          </li>
+        </ul>
+      </div>
+
+      <div *ngIf="results.kingdoms?.length" class="mt-4">
+        <h1 class="font-semibold mb-2 border-b-4 border-b-red-900">Kingdoms</h1>
+        <ul class="list-none p-0">
+          <li *ngFor="let kingdom of results.kingdoms" class="border-b border-b-red-900 py-2 flex flex-col gap-4">
+            <div>
+              <span class="text-red-900">{{ kingdom.name }}</span>@if(kingdom.description){- {{ kingdom.description }}}
+            </div>
+            <a [routerLink]="'/kingdoms/'+ kingdom._id" class="btn-info w-fit">kingdom Info</a>
           </li>
         </ul>
       </div>
