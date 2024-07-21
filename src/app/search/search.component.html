@@ -1,12 +1,9 @@
 <div class="flex flex-col gap-4 p-4">
   <div class="flex flex-col items-center gap-4">
-    <form (ngSubmit)="onSearch()" class="w-full flex gap-2">
+    <div class="w-full flex gap-2">
       <input type="text" [(ngModel)]="query" name="searchQuery" placeholder="Search..."
         class="form-input w-full p-2 border rounded-lg" (ngModelChange)="onSearch()" />
-      <button type="submit" class="btn">
-        Search
-      </button>
-    </form>
+    </div>
 
     <div class="w-full  mt-4">
       <div *ngIf="results.nobles?.length">
