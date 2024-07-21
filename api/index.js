@@ -45,7 +45,14 @@ app.get('/search', async (req, res) => {
       ]
     });
 
-    res.json({ nobles, families, cities });
+    const kingdoms = await Kingdom.find({
+      $or: [
+        { name: { $regex: regex } },
+        { description: { $regex: regex } }
+      ]
+    });
+
+    res.json({ nobles, families, cities, kingdoms });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

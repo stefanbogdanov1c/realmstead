@@ -35,6 +35,18 @@
         </ul>
       </div>
 
+      <div *ngIf="results.kingdoms?.length" class="mt-4">
+        <h1 class="font-semibold mb-2 border-b-4 border-b-red-900">Kingdoms</h1>
+        <ul class="list-none p-0">
+          <li *ngFor="let kingdom of results.kingdoms" class="border-b border-b-red-900 py-2 flex flex-col gap-4">
+            <div>
+              <span class="text-red-900">{{ kingdom.name }}</span>@if(kingdom.description){- {{ kingdom.description }}}
+            </div>
+            <a [routerLink]="'/kingdoms/'+ kingdom._id" class="btn-info w-fit">kingdom Info</a>
+          </li>
+        </ul>
+      </div>
+
       <div *ngIf="results.cities?.length" class="mt-4">
         <h1 class="font-semibold mb-2 border-b-4 border-b-red-900">Cities</h1>
         <ul class="list-none p-0">
