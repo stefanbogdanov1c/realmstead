@@ -23,71 +23,92 @@ export const routes: Routes = [
     pathMatch: 'full',
     component: HomeComponent,
   },
+  // Nobles routes
   {
     path: 'nobles',
-    component: NoblesComponent,
+    children: [
+      {
+        path: '',
+        component: NoblesComponent,
+      },
+      {
+        path: 'create',
+        component: CreateNobleFormComponent,
+      },
+      {
+        path: ':nobleId',
+        component: NobleInfoComponent,
+      },
+      {
+        path: ':nobleId/edit',
+        component: EditNobleFormComponent,
+      },
+    ],
   },
-  {
-    path: 'nobles/create',
-    component: CreateNobleFormComponent,
-  },
-  {
-    path: 'nobles/:nobleId',
-    component: NobleInfoComponent,
-  },
-  {
-    path: 'nobles/:nobleId/edit',
-    component: EditNobleFormComponent,
-  },
-
+  // Cities routes
   {
     path: 'cities',
-    component: CitiesComponent,
+    children: [
+      {
+        path: '',
+        component: CitiesComponent,
+      },
+      {
+        path: 'create',
+        component: CreateCityFormComponent,
+      },
+      {
+        path: ':cityId',
+        component: CityInfoComponent,
+      },
+      {
+        path: ':cityId/edit',
+        component: EditCityFormComponent,
+      },
+    ],
   },
-  {
-    path: 'cities/create',
-    component: CreateCityFormComponent,
-  },
-  {
-    path: 'cities/:cityId',
-    component: CityInfoComponent,
-  },
-  {
-    path: 'cities/:cityId/edit',
-    component: EditCityFormComponent,
-  },
-
+  // Families routes
   {
     path: 'families',
-    component: FamiliesComponent,
+    children: [
+      {
+        path: '',
+        component: FamiliesComponent,
+      },
+      {
+        path: 'create',
+        component: CreateFamilyFormComponent,
+      },
+      {
+        path: ':familyId',
+        component: FamilyInfoComponent,
+      },
+      {
+        path: ':familyId/edit',
+        component: EditFamilyFormComponent,
+      },
+    ],
   },
-  {
-    path: 'families/create',
-    component: CreateFamilyFormComponent,
-  },
-  {
-    path: 'families/:familyId',
-    component: FamilyInfoComponent,
-  },
-  {
-    path: 'families/:familyId/edit',
-    component: EditFamilyFormComponent,
-  },
-
+  // Kingdoms routes
   {
     path: 'kingdoms',
-    component: KingdomsComponent,
-  },
-  {
-    path: 'kingdoms/create',
-    component: CreateKingdomFormComponent,
-  },
-  {
-    path: 'kingdoms/:kingdomId',
-    component: KingdomInfoComponent,
-  },
-  {
-    path: 'kingdoms/:kingdomId/edit',
-    component: EditKingdomFormComponent,
+    children: [
+      {
+        path: '',
+        component: KingdomsComponent,
+      },
+      {
+        path: 'create',
+        component: CreateKingdomFormComponent,
+      },
+      {
+        path: ':kingdomId',
+        component: KingdomInfoComponent,
+      },
+      {
+        path: ':kingdomId/edit',
+        component: EditKingdomFormComponent,
+      },
+    ],
   },
 ];

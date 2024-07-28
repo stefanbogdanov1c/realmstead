@@ -23,7 +23,7 @@
     </div>
     }
     }
-    @if(family.members) {
+    @if(family.members && family.members.length > 0) {
     <div class="flex flex-wrap gap-4">
       <h1>Members:</h1>
       @for(member of family.members; track member) {
