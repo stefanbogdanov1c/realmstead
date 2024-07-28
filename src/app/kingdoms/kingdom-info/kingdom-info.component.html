@@ -33,7 +33,7 @@
     }
     }
 
-    @if(kingdom.vassalFamiliesIds) {
+    @if(kingdom.vassalFamiliesIds && kingdom.vassalFamiliesIds.length > 0) {
     <div class="flex flex-wrap gap-4">
       <h1>Vassal Families:</h1>
       @for(family of families; track family) {
