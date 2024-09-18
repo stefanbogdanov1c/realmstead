@@ -72,16 +72,6 @@ h1, h2, h3, h4, h5, h6, label, th, .cursive {
   margin: 10px;
 }
 
-.paper {
-  background-color: #fdf5e6; /* A light beige color */
-  background-image: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.1) 50%,
-      transparent 50%
-    ),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 50%, transparent 50%);
-}
-
 .paper2 {
   background: radial-gradient(ellipse at center, #e5e696 64%,#d1d360 100%);
 }
