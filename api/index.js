@@ -9,15 +9,15 @@ const Kingdom = require('./models/kingdom.model');
 
 const app = express();
 
-app.use(cors());
 
 mongoose.connect('mongodb://localhost:27017/realmstead');
 
+app.use(cors());
 app.use(bodyParser.json());
 
 app.get('/search', async (req, res) => {
   const query = req.query.query || '';
-  
+
   try {
     // Create a regex pattern for partial matching
     const regex = new RegExp(query, 'i'); // 'i' for case-insensitive
@@ -186,7 +186,7 @@ app.post('/api/families', (req, res) => {
 });
 
 // GET all families
-app.get('/api/families', (req, res) => {
+app.get('/api/families', (_req, res) => {
   Family.find()
     .then(families => {
       res.json(families);
