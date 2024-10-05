@@ -48,7 +48,9 @@
     </div>
   </div>
   <div class="flex flex-col md:flex-row gap-2 justify-between">
-    <button class="btn-info w-full" (click)="onGoBack()">Go Back</button>
+    <div class="w-full">
+      <app-go-back-button></app-go-back-button>
+    </div>
     <button class="btn w-full" (click)="onEditNoble(noble._id)">Edit Noble</button>
     <button class="btn-danger w-full" (click)="onDeleteNoble(noble._id)">Delete Noble</button>
   </div>

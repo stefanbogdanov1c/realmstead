@@ -6,11 +6,12 @@ import { Noble } from '../../types';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { createNewNoble, updateNoble } from '../../app.store';
+import { GoBackFormButtonComponent } from '../../shared/go-back-form-button/go-back-form-button.component';
 
 @Component({
   selector: 'app-noble-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, GoBackFormButtonComponent],
   templateUrl: 'noble-form.component.html',
   styles: ``,
 })

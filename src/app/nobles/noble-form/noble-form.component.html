@@ -94,9 +94,9 @@
   </div>
 
   <div class="flex justify-between gap-2">
-    <button type="button" routerLink="/nobles" class="btn-danger w-full cursor-pointer">
-      Go Back
-    </button>
+    <div class="w-full">
+      <app-go-back-form-button></app-go-back-form-button>
+    </div>
     <button type="submit" [disabled]="!nobleForm.valid" class="btn w-full cursor-pointer">
       Submit
     </button>

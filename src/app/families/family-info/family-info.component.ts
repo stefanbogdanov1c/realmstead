@@ -14,11 +14,12 @@ import {
   selectAllNobles,
   selectFamilyById,
 } from '../../app.store';
+import { GoBackButtonComponent } from '../../shared/go-back-button/go-back-button.component';
 
 @Component({
   selector: 'app-family-info',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, GoBackButtonComponent],
   templateUrl: 'family-info.component.html',
   styles: ``,
 })
@@ -56,14 +57,10 @@ export class FamilyInfoComponent implements OnInit {
 
   onDeleteFamily(id: string) {
     this.store.dispatch(deleteFamily({ id }));
-    this.onGoBack();
+    this.router.navigate(['/families']);
   }
 
   onEditFamily(id: string) {
     this.router.navigate(['/families', id, 'edit']);
-  }
-
-  onGoBack() {
-    this.router.navigate(['/families']);
   }
 }

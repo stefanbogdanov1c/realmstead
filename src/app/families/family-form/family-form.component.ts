@@ -6,11 +6,12 @@ import { Family, Noble } from '../../types';
 import { FormBuilder, FormControl, FormArray, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { createNewFamily, fetchAllNobles, selectAllNobles, updateFamily } from '../../app.store';
+import { GoBackFormButtonComponent } from '../../shared/go-back-form-button/go-back-form-button.component';
 
 @Component({
   selector: 'app-family-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, GoBackFormButtonComponent],
   templateUrl: 'family-form.component.html',
   styles: ``,
 })

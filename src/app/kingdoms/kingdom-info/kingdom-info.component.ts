@@ -18,11 +18,12 @@ import {
   selectAllNobles,
   selectKingdomById,
 } from '../../app.store';
+import { GoBackButtonComponent } from '../../shared/go-back-button/go-back-button.component';
 
 @Component({
   selector: 'app-kingdom-info',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, GoBackButtonComponent],
   templateUrl: 'kingdom-info.component.html',
   styles: ``,
 })
@@ -72,14 +73,10 @@ export class KingdomInfoComponent implements OnInit {
 
   onDeleteKingdom(id: string) {
     this.store.dispatch(deleteKingdom({ id }));
-    this.onGoBack();
+    this.router.navigate(['/kingdoms']);
   }
 
   onEditKingdom(id: string) {
     this.router.navigate(['/kingdoms', id, 'edit']);
-  }
-
-  onGoBack() {
-    this.router.navigate(['/kingdoms']);
   }
 }

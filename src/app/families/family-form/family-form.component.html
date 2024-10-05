@@ -74,9 +74,9 @@
 
 
   <div class="flex justify-between gap-2 mt-2">
-    <button type="button" routerLink="/families" class="btn-danger w-full cursor-pointer">
-      Go Back
-    </button>
+    <div class="w-full">
+      <app-go-back-form-button></app-go-back-form-button>
+    </div>
     <button type="submit" [disabled]="familyForm.invalid" class="btn w-full cursor-pointer">
       Submit
     </button>

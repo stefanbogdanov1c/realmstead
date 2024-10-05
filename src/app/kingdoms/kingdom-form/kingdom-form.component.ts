@@ -7,11 +7,12 @@ import { createNewKingdom, fetchAllCities, fetchAllFamilies, fetchAllKingdoms, f
 import { HttpService } from '../../http.service';
 import { Kingdom, Noble, Family, City } from '../../types';
 import { Observable } from 'rxjs';
+import { GoBackFormButtonComponent } from '../../shared/go-back-form-button/go-back-form-button.component';
 
 @Component({
   selector: 'app-kingdom-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, GoBackFormButtonComponent],
   templateUrl: './kingdom-form.component.html',
   styles: [],
 })

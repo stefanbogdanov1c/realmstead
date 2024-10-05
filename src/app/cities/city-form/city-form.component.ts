@@ -6,11 +6,12 @@ import { City } from '../../types';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { createNewCity, updateCity } from '../../app.store';
+import { GoBackFormButtonComponent } from '../../shared/go-back-form-button/go-back-form-button.component';
 
 @Component({
   selector: 'app-city-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, GoBackFormButtonComponent],
   templateUrl: 'city-form.component.html',
   styles: ``,
 })

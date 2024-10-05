@@ -71,7 +71,9 @@
   </div>
 
   <div class="flex flex-col md:flex-row gap-2 justify-between">
-    <button class="btn-info w-full" (click)="onGoBack()">Go Back</button>
+    <div class="w-full">
+      <app-go-back-button></app-go-back-button>
+    </div>
     <button class="btn w-full" (click)="onEditKingdom(kingdom._id)">Edit Kingdom</button>
     <button class="btn-danger w-full" (click)="onDeleteKingdom(kingdom._id)">Delete Kingdom</button>
   </div>

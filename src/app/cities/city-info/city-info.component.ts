@@ -10,11 +10,12 @@ import {
   fetchAllCities,
   selectCityById,
 } from '../../app.store';
+import { GoBackButtonComponent } from '../../shared/go-back-button/go-back-button.component';
 
 @Component({
   selector: 'app-city-info',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, GoBackButtonComponent],
   templateUrl: 'city-info.component.html',
   styles: ``,
 })
@@ -45,14 +46,10 @@ export class CityInfoComponent implements OnInit {
 
   onDeleteCity(id: string) {
     this.store.dispatch(deleteCity({ id }));
-    this.onGoBack();
+    this.router.navigate(['/cities']);
   }
 
   onEditCity(id: string) {
     this.router.navigate(['/cities', id, 'edit']);
-  }
-
-  onGoBack() {
-    this.router.navigate(['/cities']);
   }
 }

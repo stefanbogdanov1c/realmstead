@@ -12,11 +12,12 @@ import {
   selectAllNobles,
   selectNobleById,
 } from '../../app.store';
+import { GoBackButtonComponent } from '../../shared/go-back-button/go-back-button.component';
 
 @Component({
   selector: 'app-noble-info',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, GoBackButtonComponent],
   templateUrl: 'noble-info.component.html',
   styles: ``,
 })
@@ -77,14 +78,10 @@ export class NobleInfoComponent implements OnInit {
 
   onDeleteNoble(id: string) {
     this.store.dispatch(deleteNoble({ id }));
-    this.onGoBack();
+    this.router.navigate(['/nobles']);
   }
 
   onEditNoble(id: string) {
     this.router.navigate(['/nobles', id, 'edit']);
-  }
-
-  onGoBack() {
-    this.router.navigate(['/nobles']);
   }
 }
